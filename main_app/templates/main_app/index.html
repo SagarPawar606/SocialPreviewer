@@ -1,0 +1,213 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="head-container">
+    <h1>Welcome to the Social Previewer <br> View the <span>Social Link preview</span> and <span>Meta-data</span> of your <br> website at one click</h1>
+    <div class="form-group">
+        <form action="{% url 'home' %}" method="get">
+            <input type="text" name="url" id="" placeholder="www.xyzexample.com" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
+<!-- This bloc will execute only after search if being done-->
+{% if tag %}
+    <div class="output-container">
+        <div class="previews-window">
+            <h4 class="output-head">URL Preview</h4>
+            <div class="preview-selector">
+                <button id="custom-btn" onclick="display_preview('custom')" >Custom</button>
+                <button id="facebook-btn" onclick="display_preview('facebook')">Facebook</button>
+                <button id="twitter-btn" onclick="display_preview('twitter')">Twitter</button>
+            </div>
+            <div class="preview-output">
+                <!------------------ CUSTOM STYLE CARD------------------->
+                <div class="custom" id="custom">
+                    <img src="{{tag.og_image}}" alt="" style="width: 1280px;">
+                    <div class="custom-preview-data">
+                        <!-- title of given url -->
+                        {% if tag.og_title %}
+                            <p class="custom-title">{{tag.og_title|truncatechars:50}}</p>
+                        {% else %}
+                            <p class="custom-title">{{tag.title|truncatechars:50}}</p>
+                        {% endif %}
+                        <!-- description of given url -->
+                        {% if tag.og_description %}
+                            <p>{{tag.og_description|truncatewords:12}}</p>
+                        {% else %}
+                            <p>{{tag.description|truncatewords:12}}</p>
+                        {% endif %}
+                        <p class="custom-site"> <img src="{{tag.og_favicon}}"> {{tag.site_domain}}</p>
+                    </div>
+                </div>
+
+                <!------------------ FACEBOOK STYLE CARD------------------->
+                <div class="facebook" id="facebook" style="display: none">
+                    <img src="{{tag.og_image}}" alt="" style="width: 1280px;">
+                    <div class="facebook-preview-data">
+                        <p class="facebook-site"> {{tag.site_domain|upper}}</p>
+
+                        <!-- title of given url -->
+                        {% if tag.og_title %}
+                            <p class="facebook-title">{{tag.og_title|truncatechars:50}}<p>
+                        {% else %}
+                            <p class="facebook-title">{{tag.title|truncatechars:50}}<p>
+                        {% endif %}
+
+                        <!-- description of given url -->
+                        {% if tag.og_description %}
+                            <p>{{tag.og_description|truncatewords:12}}</p>
+                        {% else %}
+                            <p>{{tag.description|truncatewords:12}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!------------------ TWITTER STYLE CARD------------------->
+                <!-- 
+                    Twitter link preview will be available if twitter:card tag is there
+                    If twitter:image, twitter:title, twitter:description etc. are not available,
+                    it will fallback to its respective og: tags.
+                -->
+                <div class="twitter" id="twitter" style="display: none">
+                    {% if tag.twtr_card %}
+                        <div class="twtr-card-container">
+                            <div class="twitter-image">
+                                <img class="twtr-img" src="{{tag.og_image}}" alt="">
+                            </div>
+                            <div class="twitter-preview-data">
+                                <p>{{tag.site_domain}}<br>
+                                <span style="font-weight: 600;">{{tag.og_title|truncatechars:50}}</span><br> 
+                                {{tag.og_description|truncatewords:10}}</p><br>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>Sorry! No twitter related data found for this URL.</p>
+                    {% endif %}
+                </div>
+                <!-- -------------------------------------------------------- -->
+            </div>
+        </div>
+        <!--------------------META-DATA SECTION-------------------------------  -->
+        <div class="metadata-window">
+            <h4 class="output-head">Metadata</h4>
+            <a href="{% url 'download_meta' %}" class="export-meta">Download meta data</a>
+            <!-- <button onclick="location.href={% url 'download_meta' %}" type="button" class="export-meta"> -->
+               <!-- Download meta-data</button> -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in tag.items %}
+                    <tr>
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Javascript to toggle between different styles of Preview design -->
+    <script type="text/javascript" src="{% static 'main_app/index.js' %}">
+    </script>
+{% endif %}
+<div class="info">
+    <h2>What's Link Preview</h2>
+    <p>
+        Link previews are pop-up boxes you might see on a chat app or other social media platform when you share a URL. <br> 
+        Link previews summarize the contents of the URL and display the name of the linked website, <br> an image and a description of the website’s content.
+    </p>
+</div>
+<div class="feature-block">
+    <h2>Why <span>SocialPreviewer</span></h2>
+    <div class="features">
+        <div class="f f1">
+            <h1>1</h1>
+            <h3>Multiple Previews</h3>
+            <p>
+                Generates multiple link previews in <br>
+                different styles like custom, facebook, twitter style
+            </p>
+        </div>
+        <div class="f f2">
+            <h1>2</h1>
+            <h3>API link</h3>
+            <p>
+                Use our api link to grab metadata of url. <br> 
+                e.g. title,description, og & twitter tags etc.
+            </p>
+        </div>
+        <div class="f f3">
+            <h1>3</h1>
+            <h3>Download the Meta-data</h3>
+            <p>Generates and download the meta-data of url at single click</p>
+        </div>
+        <div class="f f4">
+            <h1>4</h1>
+            <h3>Insight Look</h3>
+            <p>
+                Owner of url/website ? Cehck if it is missing any meta tags 
+                to make it more SEO friendly.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="api-block" id="api-block">
+    <h3><span>SocialPreviewer</span> API endpoint to fetch meta-data</h3>
+    Simply send a GET request on endpoint given below,
+    <div class="code">
+        <p>http://127.0.0.1:8000/api/?url=<..input_url..> </p>
+    </div>
+    <h4>Python Example</h4>
+    <div class="code example">
+        <p>import request</p><br>
+        <p>endpoint = 'http://127.0.0.1:8000/api'</p>
+        <p>url = 'https://www.youtube.com/watch?v=rfscVS0vtbw&ab_channel=freeCodeCamp.org'</p> <br>
+        <p>
+            r = requests.get(endpoint, params={'url': url}) <br>
+            print(r.json()) <br>
+        </p>
+    </div>
+    <h4>JSON Response</h4>
+    <div class="code output">
+        <p>
+            { <br>
+                "title": "Learn Python - Full Course for Beginners [Tutorial] - YouTube", <br>
+                "description": "This course will give you a full introduction into all of the core concepts in python. Follow along with the videos and you'll be a python programmer in no t...", <br>
+                "site_domain": "www.youtube.com", <br>
+                "og_title": "Learn Python - Full Course for Beginners [Tutorial]", <br>
+                "og_description": "This course will give you a full introduction into all of the core concepts in python. Follow along with the videos and you'll be a python programmer in no t...", <br>
+                "og_image": "https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg", <br>
+                "og_url": "https://www.youtube.com/watch?v=rfscVS0vtbw", <br>
+                "og_site": "YouTube", <br>
+                "og_embeded_url": "https://www.youtube.com/embed/rfscVS0vtbw", <br>
+                "og_favicon": "https://www.youtube.com/s/desktop/1fa3f652/img/favicon.ico", <br>
+                "twtr_card": "player", <br>
+                "twtr_title": "Learn Python - Full Course for Beginners [Tutorial]", <br>
+                "twtr_description": "This course will give you a full introduction into all of the core concepts in python. Follow along with the videos and you'll be a python programmer in no t...", <br>
+                "twtr_image": "https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg", <br>
+                "twtr_url": "https://www.youtube.com/watch?v=rfscVS0vtbw", <br>
+                "twtr_site": "@youtube", <br>
+                "twtr_embeded_url": "https://www.youtube.com/embed/rfscVS0vtbw" <br>
+              }
+        </p>
+    </div>
+</div>
+
+
+{% endblock %}
