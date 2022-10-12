@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-s_)28^9l)+6hcszn)v$ea*$@33)(1l@=a^du$jrv1a##&7zu5e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["socialpreviewer.herokuapp.com"]
 
 
 # Application definition
