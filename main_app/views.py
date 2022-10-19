@@ -1,9 +1,12 @@
-from urllib import response
-from django.shortcuts import render
-from .utils import get_meta_data
-from django.contrib import messages
-from django.http import JsonResponse, HttpResponse
 import csv
+from urllib import response
+
+from django.contrib import messages
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+
+from .utils import get_meta_data
+
 # Create your views here.
 
 downloadable_meta_data = None

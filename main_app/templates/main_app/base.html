@@ -13,7 +13,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <h4>SocialPreviewer</h4>
+        <h4><a href="{% url 'home' %}">SocialPreviewer</a></h4>
         <ul>
             <li>
                 <a href="https://github.com/SagarPawar606/SocialPreviewer">GitHub</a>
@@ -28,10 +28,13 @@
     {% endblock %}
 
     <footer>
-        <h5>Design & built by, SagarPawar</h5>
-        <img src="{% static 'main_app/mail.png' %}" alt="" style="width:30px; height:30px;"> 
-        <p>SagarPawar606@gmail.com</p>
-        
+        <div class="footer-content">
+            <h5>Design & built by, SagarPawar</h5> 
+            <p>
+                <img src="{% static 'main_app/mail.png' %}" alt="" style="width:30px; height:30px; margin-inline: 15px;">
+                SagarPawar606@gmail.com
+            </p>
+        </div>
     </footer>
 
 </body>

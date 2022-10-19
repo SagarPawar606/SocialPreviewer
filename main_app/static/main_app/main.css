@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto&family=Ruda&display=swap');
 
-
 * {
     margin: 0;
     padding: 0;
@@ -68,9 +67,12 @@ a {
     text-align: center;
     margin-block: 10px;
 }
+.welcome-txt{
+    font-weight: 700;
+}
 
 
-h1 span {
+.welcome-txt span {
     background: -webkit-linear-gradient(var(--gradient-text));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -271,7 +273,7 @@ form {
 }
 
 /* ----------------------------------------------------------------- */
-.export-meta{
+.export-meta {
     display: inline-block;
     padding: 10px 10px;
     border-radius: 10px;
@@ -280,6 +282,7 @@ form {
     color: white;
 
 }
+
 /*--------------- Deviding table into equal columns----------------- */
 table {
     table-layout: fixed;
@@ -342,16 +345,19 @@ td {
     -webkit-text-fill-color: transparent;
 }
 
-.info h2, .info p {
+.info h2,
+.info p {
     margin-bottom: 15px;
 }
+
 /* --------------------------API BLOCK------------------------- */
-.api-block{
+.api-block {
     margin: auto;
     width: 70%;
 
 }
-.code{
+
+.code {
     padding: 20px;
     background: #282A36;
     border-radius: 10px;
@@ -359,9 +365,25 @@ td {
     overflow: auto;
     white-space: nowrap;
 }
-.code p{
+
+.code p {
     color: white;
-    font-family: Consolas,monaco,monospace; 
+    font-family: Consolas, monaco, monospace;
+}
+
+/* --------------------- FOOTER ------------------------- */
+footer {
+    background: #4660EC;
+}
+
+.footer-content {
+    width: fit-content;
+    margin: auto;
+    padding-block: 20px;
+    margin-top: 200px;
+}
+.footer-content > *{
+    color: white;
 }
 
 @media (max-width: 800px) {

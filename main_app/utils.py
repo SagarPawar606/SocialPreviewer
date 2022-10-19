@@ -57,16 +57,16 @@ def get_meta_data(req_url):
                 "og_image" : og_image.get('content') if og_image else None,
                 "og_url" : og_url.get('content') if og_url else None,
                 "og_site" : og_site.get('content') if og_site else None,
-                "og_embeded_url" : og_embeded_url('content') if og_embeded_url else None,
-                
+                "og_embeded_url" : og_embeded_url.get('content') if og_embeded_url else None,
                 }
+    print(og_dict)
 
     # TIWTTER:TAGS
     twtr_card = soup.find("meta",  {"name":"twitter:card"})
+    twtr_dict = {}
 
     if twtr_card:
-        twtr_dict = {}
-        # Few site use attribute 'content' or 'value'
+        # Few sites use attribute 'content' or 'value' in twitter:card tag
         twtr_card_type = twtr_card.get('content')
         if not twtr_card_type:
             twtr_card_type = twtr_card.get('value')
@@ -89,7 +89,7 @@ def get_meta_data(req_url):
         })
 
     else:
-        # if no twitter:card tag found all twitter tags will be none
+        # if no twitter:card tag found, all twitter tags will be none
         twtr_dict.update({
         "twtr_card" : None,
         "twtr_title" : None,
