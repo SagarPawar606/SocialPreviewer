@@ -4,7 +4,7 @@
 
 SocialPreviewer is platform where you can make sure your that
 your website is ready to be shared, it checks that whether particualr websites
-contain required meta tags or not, Meta tags like [Open Graph] tags and [twitter meta] tags helps the other social media app to show the preview of the given url.
+contain required meta tags or not, Meta tags like [Open Graph] tags and [twitter meta] tags helps the other social media app to show the preview of the given url
 
 ## Features
 
